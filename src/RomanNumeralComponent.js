@@ -6,17 +6,28 @@ export default function RomanNumeralComponent () {
 
 
     const addAndConvertToRomanNumerals = (ints) => {
+        var lookup = {M:1000,CM:900,D:500,CD:400,C:100,XC:90,L:50,XL:40,X:10,IX:9,V:5,IV:4,I:1},roman = '',i;
+        for ( i in lookup ) {
+          while ( ints >= lookup[i] ) {
+            roman += i;
+            ints -= lookup[i];
+          }
+        }
+        return roman;
         /* Implement me! */
-        return ints;
     }
 
     const addNumbers = (inputString) => {
         const numbersStringArray = inputString.split(",");
-        const numbers = numbersStringArray.map((numberAsString) => { return parseInt(numberAsString, 10) })
+        const numbers = numbersStringArray.reduce(myFunc);
 
+        function myFunc(total, num) {
+          return parseInt(total) + parseInt(num);
+        }
+        
         /* numbers is an array of ints. E.g. [1, 2, 3] */
         const answer = addAndConvertToRomanNumerals(numbers)
-
+        console.log(answer)
         return answer;
     }
 
@@ -34,7 +45,7 @@ export default function RomanNumeralComponent () {
         <div>
             <form onSubmit={handleSubmit}>
                 <label style={{paddingRight: "10px"}}>
-                    <span style={{paddingRight: "10px"}}>Numbers (separated by commas):</span>
+                    <span style={{paddingRight: "10px"}}>Add Numbers (separated by commas):</span>
                     <input type="text" name="input-form" onChange={handleChange}/>
                 </label>
                 <input type="submit" value="Add Numbers" />
